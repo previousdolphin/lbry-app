@@ -81,9 +81,8 @@ class FileDownloadLink extends React.PureComponent {
       }
       return (
         <Link
-          button="text"
           label={__('Download')}
-          icon="icon-download"
+          icon="DownloadCloud"
           className="no-underline"
           onClick={() => {
             purchaseUri(uri);
@@ -91,15 +90,7 @@ class FileDownloadLink extends React.PureComponent {
         />
       );
     } else if (fileInfo && fileInfo.download_path) {
-      return (
-        <Link
-          label={__('Open')}
-          button="text"
-          icon="icon-external-link-square"
-          className="no-underline"
-          onClick={() => openFile()}
-        />
-      );
+      return <Link label={__('Open')} icon="BookOpen" onClick={() => openFile()} />;
     }
 
     return null;

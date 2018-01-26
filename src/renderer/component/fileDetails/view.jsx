@@ -26,7 +26,7 @@ class FileDetails extends React.PureComponent {
 
     return (
       <div>
-        <div className="divider__horizontal" />
+        <hr />
         <FileActions uri={uri} />
         <div className="divider__horizontal" />
         <div className="card__content card__subtext card__subtext--allow-newlines">

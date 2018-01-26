@@ -74,7 +74,6 @@ class WunderBar extends React.PureComponent<Props> {
 
   input: ?HTMLInputElement;
   throttledGetSearchSuggestions: string => void;
-
   render() {
     const { searchQuery, isActive, address, suggestions } = this.props;
 

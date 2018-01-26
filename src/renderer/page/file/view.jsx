@@ -3,7 +3,7 @@ import React from 'react';
 import lbry from 'lbry';
 import { buildURI, normalizeURI } from 'lbryURI';
 import Video from 'component/video';
-import { Thumbnail } from 'component/common';
+import Thumbnail from 'component/common/thumbnail';
 import FilePrice from 'component/filePrice';
 import FileDetails from 'component/fileDetails';
 import UriIndicator from 'component/uriIndicator';
@@ -73,44 +73,40 @@ class FilePage extends React.PureComponent {
     return (
       <Page>
         <section className={`card ${obscureNsfw ? 'card--obscured ' : ''}`}>
-          <div className="show-page-media">
-            {isPlayable ? (
-              <Video className="video-embedded" uri={uri} />
-            ) : metadata && metadata.thumbnail ? (
-              <Thumbnail src={metadata.thumbnail} />
+          <React.Fragment>
+            {isPlayable && <Video className="video__embedded" uri={uri} />}
+            {!isPlayable && metadata && metadata.thumbnail ? (
+              <Thumbnail className="video__embedded" src={metadata.thumbnail} />
             ) : (
               <Thumbnail />
             )}
-          </div>
-          <div className="card__inner">
-            {(!tab || tab === 'details') && (
-              <div>
-                {' '}
-                <div className="card__title-identity">
-                  {!fileInfo || fileInfo.written_bytes <= 0 ? (
-                    <span style={{ float: 'right' }}>
-                      <FilePrice uri={normalizeURI(uri)} />
-                      {isRewardContent && (
-                        <span>
-                          {' '}
-                          <Icon icon={icons.FEATURED} />
-                        </span>
-                      )}
+          </React.Fragment>
+          <div className="card--content">
+            <div className="card__title-identity">
+              <h1>{title}</h1>
+              {!fileInfo || fileInfo.written_bytes <= 0 ? (
+                <React.Fragment>
+                  <FilePrice uri={normalizeURI(uri)} />
+                  {isRewardContent && (
+                    <span>
+                      {' '}
+                      <Icon icon={icons.FEATURED} />
                     </span>
-                  ) : null}
-                  <h1>{title}</h1>
-                  <div className="card__subtitle card--file-subtitle">
-                    <UriIndicator uri={uri} link />
-                    <span className="card__publish-date">
-                      Published on <DateTime block={height} show={DateTime.SHOW_DATE} />
-                    </span>
-                  </div>
-                </div>
-                <SubscribeButton uri={subscriptionUri} channelName={channelName} />
-                <FileDetails uri={uri} />
+                  )}
+                </React.Fragment>
+              ) : null}
+              <div className="card__subtitle card--file-subtitle">
+                <UriIndicator uri={uri} link />
+                <span className="card__publish-date">
+                  Published on <DateTime block={height} show={DateTime.SHOW_DATE} />
+                </span>
               </div>
-            )}
-            {tab === 'tip' && <WalletSendTip claim_id={claim.claim_id} uri={uri} />}
+            </div>
+            <div className="card__actions">
+              <SubscribeButton uri={subscriptionUri} channelName={channelName} />
+              <Link alt icon="Send" label={__('Send a tip')} />
+            </div>
+            <FileDetails uri={uri} />
           </div>
         </section>
       </Page>

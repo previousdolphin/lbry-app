@@ -4,6 +4,7 @@ import VideoPlayer from './internal/player';
 import VideoPlayButton from './internal/play-button';
 import LoadingScreen from './internal/loading-screen';
 import NsfwOverlay from 'component/nsfwOverlay';
+import classnames from 'classnames';
 
 class Video extends React.PureComponent {
   constructor(props) {
@@ -58,6 +59,7 @@ class Video extends React.PureComponent {
       savePosition,
       mediaPaused,
       mediaPosition,
+      className,
     } = this.props;
 
     const isPlaying = playingUri === uri;
@@ -78,19 +80,19 @@ class Video extends React.PureComponent {
     }
 
     const klasses = [];
-    klasses.push(obscureNsfw ? 'video--obscured ' : '');
-    if (isLoading || isDownloading) klasses.push('video-embedded', 'video');
-    if (mediaType === 'video') {
-      klasses.push('video-embedded', 'video');
-      klasses.push(isPlaying ? 'video--active' : 'video--hidden');
-    } else if (mediaType === 'application') {
-      klasses.push('video-embedded');
-    } else if (!isPlaying) klasses.push('video-embedded');
+    // klasses.push(obscureNsfw ? 'video--obscured ' : '');
+    // if (isLoading || isDownloading) klasses.push('video-embedded', 'video');
+    // if (mediaType === 'video') {
+    //   klasses.push('video-embedded', 'video');
+    //   klasses.push(isPlaying ? 'video--active' : 'video--hidden');
+    // } else if (mediaType === 'application') {
+    //   klasses.push('video-embedded');
+    // } else if (!isPlaying) klasses.push('video-embedded');
     const poster = metadata.thumbnail;
 
     return (
       <div
-        className={klasses.join(' ')}
+        className={classnames({}, className)}
         onMouseEnter={this.handleMouseOver.bind(this)}
         onMouseLeave={this.handleMouseOut.bind(this)}
       >

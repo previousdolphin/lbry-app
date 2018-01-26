@@ -6,10 +6,10 @@
   user-select: text;
   display: flex;
   position: relative;
+  flex-direction: column;
 }
 
 .card--section {
-  flex-direction: column;
   background-color: var(--color-white);
   padding: $spacing-vertical;
   margin-top: $spacing-vertical * 2/3;

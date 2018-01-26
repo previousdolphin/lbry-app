@@ -204,6 +204,11 @@ input {
 //   font-weight: 700;
 // }
 
+.divider__horizontal {
+  border-top: var(--color-divider);
+  margin: 16px 0;
+}
+
 .hidden {
   display: none;
 }

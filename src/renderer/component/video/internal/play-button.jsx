@@ -34,14 +34,13 @@ class VideoPlayButton extends React.PureComponent {
      */
 
     const disabled = isLoading || fileInfo === undefined;
-    const icon = ['audio', 'video'].indexOf(mediaType) !== -1 ? 'icon-play' : 'icon-folder-o';
+    const icon = ['audio', 'video'].indexOf(mediaType) !== -1 ? 'PlayCircle' : 'Folder';
 
     return (
       <Link
-        button={button || null}
+        media
         disabled={disabled}
         label={label || ''}
-        className="video__play-button"
         icon={icon}
         onClick={() => this.watch()}
       />

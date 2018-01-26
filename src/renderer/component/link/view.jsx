@@ -25,6 +25,7 @@ type Props = {
   noStyle: ?boolean,
   noUnderline: ?boolean,
   description: ?string,
+  media: ?boolean,
 };
 
 const Button = (props: Props) => {
@@ -49,6 +50,7 @@ const Button = (props: Props) => {
     description,
     noStyle,
     noUnderline,
+    media,
     ...otherProps
   } = props;
 
@@ -58,13 +60,14 @@ const Button = (props: Props) => {
       ? 'btn--no-style'
       : {
           'btn--link': fakeLink,
-          'btn--primary': !alt && !fakeLink,
+          'btn--primary': !alt && !fakeLink && !media, // default to primary
           'btn--alt': alt,
           'btn--inverse': inverse,
           'btn--disabled': disabled,
           'btn--circle': circle,
           'btn--flat': flat,
           'btn--no-underline': fakeLink && noUnderline,
+          'btn--media': media,
         },
     className
   );

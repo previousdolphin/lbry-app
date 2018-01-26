@@ -1,5 +1,6 @@
 import { createSelector } from 'reselect';
 import { parseQueryParams } from 'util/query_params';
+import { normalizeURI } from 'lbryURI';
 
 export const selectState = state => state.navigation || {};
 
@@ -42,15 +43,12 @@ export const selectActiveHistoryEntry = createSelector(
   state => state.stack[state.index]
 );
 
-export const selectPageTitle = createSelector(
-  selectCurrentPage,
-  (page) => {
-    switch (page) {
-      default:
-        return '';
-    }
+export const selectPageTitle = createSelector(selectCurrentPage, page => {
+  switch (page) {
+    default:
+      return '';
   }
-);
+});
 
 export const selectNavLinks = createSelector(
   selectCurrentPage,
