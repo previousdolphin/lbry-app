@@ -20,7 +20,6 @@ const select = (state, props) => ({
   costInfo: makeSelectCostInfoForUri(props.uri)(state),
   metadata: makeSelectMetadataForUri(props.uri)(state),
   obscureNsfw: !selectShowNsfw(state),
-  tab: makeSelectCurrentParam('tab')(state),
   fileInfo: makeSelectFileInfoForUri(props.uri)(state),
   rewardedContentClaimIds: selectRewardContentClaimIds(state, props),
 });

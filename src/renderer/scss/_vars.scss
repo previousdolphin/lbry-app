@@ -33,16 +33,17 @@ $width-page-constrained: 800px;
   --color-nav-bg: #f6f6f6;
 
   /* Video */
-  --height-video-embedded: 500px;
-  --height-video-embedded--min: 300px;
-  // --width-video-embedded: 700px;
+  --height-video-embedded: 450px;
+  --height-video-embedded-min: 325px;
+  --width-video-embedded: 700px;
+
   // --width-video-embedded: var(--height-video-embedded) * 16/9;
   // --content-max-width: 1000px;
   // --nsfw-blur-intensity: 20px;
 
   /* Font */
   --font-size: 16px;
-  --font-line-height: 1.3333;
+  --font-line-height: 1.7;
   --font-size-subtext-multiple: 0.82;
 
   /* Shadows */

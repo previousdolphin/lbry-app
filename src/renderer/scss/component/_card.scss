@@ -51,8 +51,26 @@
   margin-top: $spacing-vertical * 1/3;
 }
 
-// TODO: regular .card__title
-// maybe not needed?
+.card__title-identity--file {
+  display: flex;
+  align-items: center;
+
+  .credit-amount, .icon {
+    margin-left: $spacing-vertical * 2/3;
+  }
+}
+
+.card__title-identity-icons {
+  display: flex;
+  align-items: center;
+}
+
+.card__title {
+  font-size: 2em;
+  font-weight: 800;
+  padding: $spacing-vertical / 3 0;
+}
+
 .card__title--small {
   font-weight: 600;
   font-size: 0.9em;
@@ -64,10 +82,21 @@
   padding-top: $spacing-vertical * 1/3;
 }
 
+.card__subtitle--file {
+  font-size: 1em;
+  padding-top: 0;
+}
+
 .card-media__internal-links {
   position: absolute;
   top: 5px;
   right: 5px;
+}
+
+.card__channel-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .card__content {
@@ -75,8 +104,28 @@
   margin-bottom: var(--card-margin);
 }
 
+
+.card__subtext-title {
+  color: var(--color-black);
+  margin-top: $spacing-vertical * 3/2;
+  font-size: calc(var(--font-size-subtext-multiple) * 1.5em);
+  font-weight: 700;
+}
+
+.card__subtext {
+  color: var(--color-grey-dark);
+  font-size: calc(var(--font-size-subtext-multiple) * 1em);
+  padding-top: $spacing-vertical * 1/3;
+  word-break: break-all;
+  font-weight: 300;
+}
+
 .card__actions {
   margin-top: var(--card-margin);
+  display: flex;
+}
+
+.card__actions--no-margin {
   display: flex;
 }
 
@@ -134,4 +183,10 @@
   .card:last-of-type {
     margin-right: $spacing-vertical * 2/3;
   }
+}
+
+// TODO: come back to this
+// Do we want an opacity over the image?
+.card--obscured {
+  background-color: #e09898;
 }

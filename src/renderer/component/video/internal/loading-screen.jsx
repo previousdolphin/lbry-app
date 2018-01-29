@@ -3,12 +3,10 @@ import Spinner from 'component/common/spinner';
 
 const LoadingScreen = ({ status, spinner = true }) => (
   <div className="video__loading-screen">
-    <div>
       {spinner && <Spinner />}
 
-      <div className="video__loading-status">{status}</div>
+      <span className="video__loading-text">{status}</span>
     </div>
-  </div>
 );
 
 export default LoadingScreen;

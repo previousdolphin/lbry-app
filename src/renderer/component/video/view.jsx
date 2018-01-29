@@ -1,3 +1,4 @@
+
 import React from 'react';
 import lbry from 'lbry';
 import VideoPlayer from './internal/player';
@@ -6,40 +7,21 @@ import LoadingScreen from './internal/loading-screen';
 import NsfwOverlay from 'component/nsfwOverlay';
 import classnames from 'classnames';
 
-class Video extends React.PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = {
-      showNsfwHelp: false,
-    };
-  }
+type Props = {
+  shouldObscure: boolean
+}
 
+class Video extends React.PureComponent<Props> {
   componentWillUnmount() {
     this.props.cancelPlay();
   }
 
-  isMediaSame(nextProps) {
+  isMediaSame(nextProps: Props) {
     return (
       this.props.fileInfo &&
       nextProps.fileInfo &&
       this.props.fileInfo.outpoint === nextProps.fileInfo.outpoint
     );
-  }
-
-  handleMouseOver() {
-    if (this.props.obscureNsfw && this.props.metadata && this.props.metadata.nsfw) {
-      this.setState({
-        showNsfwHelp: true,
-      });
-    }
-  }
-
-  handleMouseOut() {
-    if (this.state.showNsfwHelp) {
-      this.setState({
-        showNsfwHelp: false,
-      });
-    }
   }
 
   render() {
@@ -55,16 +37,19 @@ class Video extends React.PureComponent {
       claim,
       uri,
       doPlay,
+      play, // we should just have play and get rid of doPlay
       doPause,
       savePosition,
       mediaPaused,
       mediaPosition,
       className,
+      obscureNsfw,
+      shouldObscure
     } = this.props;
 
     const isPlaying = playingUri === uri;
     const isReadyToPlay = fileInfo && fileInfo.written_bytes > 0;
-    const obscureNsfw = this.props.obscureNsfw && metadata && metadata.nsfw;
+    const shouldObscureNsfw = obscureNsfw && metadata && metadata.nsfw;
     const mediaType = lbry.getMediaType(contentType, fileInfo && fileInfo.file_name);
 
     let loadStatusMessage = '';
@@ -79,51 +64,37 @@ class Video extends React.PureComponent {
       loadStatusMessage = __('Downloading stream... not long left now!');
     }
 
-    const klasses = [];
-    // klasses.push(obscureNsfw ? 'video--obscured ' : '');
-    // if (isLoading || isDownloading) klasses.push('video-embedded', 'video');
-    // if (mediaType === 'video') {
-    //   klasses.push('video-embedded', 'video');
-    //   klasses.push(isPlaying ? 'video--active' : 'video--hidden');
-    // } else if (mediaType === 'application') {
-    //   klasses.push('video-embedded');
-    // } else if (!isPlaying) klasses.push('video-embedded');
     const poster = metadata.thumbnail;
 
     return (
-      <div
-        className={classnames({}, className)}
-        onMouseEnter={this.handleMouseOver.bind(this)}
-        onMouseLeave={this.handleMouseOut.bind(this)}
-      >
-        {isPlaying &&
+      <div className={classnames("video", {}, className)}>
+      {isPlaying &&
           (!isReadyToPlay ? (
             <LoadingScreen status={loadStatusMessage} />
           ) : (
             <VideoPlayer
-              filename={fileInfo.file_name}
-              poster={poster}
-              downloadPath={fileInfo.download_path}
-              mediaType={mediaType}
-              contentType={contentType}
-              downloadCompleted={fileInfo.completed}
-              changeVolume={changeVolume}
-              volume={volume}
-              doPlay={doPlay}
-              doPause={doPause}
-              savePosition={savePosition}
-              claim={claim}
-              uri={uri}
-              paused={mediaPaused}
-              position={mediaPosition}
+            filename={fileInfo.file_name}
+            poster={poster}
+            downloadPath={fileInfo.download_path}
+            mediaType={mediaType}
+            contentType={contentType}
+            downloadCompleted={fileInfo.completed}
+            changeVolume={changeVolume}
+            volume={volume}
+            doPlay={doPlay}
+            doPause={doPause}
+            savePosition={savePosition}
+            claim={claim}
+            uri={uri}
+            paused={mediaPaused}
+            position={mediaPosition}
             />
           ))}
         {!isPlaying && (
-          <div className="video__cover" style={{ backgroundImage: `url("${metadata.thumbnail}")` }}>
+          <div className={classnames("video__cover", { 'card--obscured': shouldObscureNsfw })} style={!shouldObscureNsfw ? { backgroundImage: `url("${metadata.thumbnail}")` } : {}}>
             <VideoPlayButton {...this.props} mediaType={mediaType} />
           </div>
-        )}
-        {this.state.showNsfwHelp && <NsfwOverlay />}
+          )}
       </div>
     );
   }

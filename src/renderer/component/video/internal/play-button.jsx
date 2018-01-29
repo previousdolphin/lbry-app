@@ -23,7 +23,7 @@ class VideoPlayButton extends React.PureComponent {
   }
 
   render() {
-    const { button, label, isLoading, fileInfo, mediaType } = this.props;
+    const { button, isLoading, fileInfo, mediaType } = this.props;
 
     /*
      title={
@@ -34,13 +34,15 @@ class VideoPlayButton extends React.PureComponent {
      */
 
     const disabled = isLoading || fileInfo === undefined;
-    const icon = ['audio', 'video'].indexOf(mediaType) !== -1 ? 'PlayCircle' : 'Folder';
+    const doesPlayback = ['audio', 'video'].indexOf(mediaType) !== -1;
+    const icon = doesPlayback ? 'Play' : 'Folder';
+    const label = doesPlayback ? 'Play' : 'View';
 
     return (
       <Link
-        media
+        secondary
         disabled={disabled}
-        label={label || ''}
+        label={label}
         icon={icon}
         onClick={() => this.watch()}
       />

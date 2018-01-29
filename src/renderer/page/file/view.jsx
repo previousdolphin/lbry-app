@@ -14,6 +14,8 @@ import * as icons from 'constants/icons';
 import Link from 'component/link';
 import SubscribeButton from 'component/subscribeButton';
 import Page from 'component/page';
+import classnames from 'classnames';
+import player from 'render-media';
 
 class FilePage extends React.PureComponent {
   componentDidMount() {
@@ -43,25 +45,25 @@ class FilePage extends React.PureComponent {
       fileInfo,
       metadata,
       contentType,
-      tab,
       uri,
       rewardedContentClaimIds,
+      obscureNsfw
     } = this.props;
 
-    const showTipBox = tab == 'tip';
-
+    // This should be included below in the page
+    // Come back to me
     if (!claim || !metadata) {
       return <span className="empty">{__('Empty claim or metadata info.')}</span>;
     }
 
+    // File info
     const title = metadata.title;
     const isRewardContent = rewardedContentClaimIds.includes(claim.claim_id);
-    const mediaType = lbry.getMediaType(contentType);
-    const player = require('render-media');
-    const obscureNsfw = this.props.obscureNsfw && metadata && metadata.nsfw;
-    const isPlayable =
-      Object.values(player.mime).indexOf(contentType) !== -1 || mediaType === 'audio';
+    const shouldObscureThumbnail = obscureNsfw && metadata.nsfw;
+    const thumbnail = metadata.thumbnail;
     const { height, channel_name: channelName, value } = claim;
+    const isPlayable = Object.values(player.mime).indexOf(contentType) !== -1 || mediaType === 'audio';
+    const mediaType = lbry.getMediaType(contentType);
     const channelClaimId =
       value && value.publisherSignature && value.publisherSignature.certificateId;
 
@@ -72,40 +74,38 @@ class FilePage extends React.PureComponent {
 
     return (
       <Page>
-        <section className={`card ${obscureNsfw ? 'card--obscured ' : ''}`}>
+        <section className="card">
           <React.Fragment>
-            {isPlayable && <Video className="video__embedded" uri={uri} />}
-            {!isPlayable && metadata && metadata.thumbnail ? (
-              <Thumbnail className="video__embedded" src={metadata.thumbnail} />
+            {isPlayable ? (
+              <Video className="video__embedded" uri={uri} />
             ) : (
-              <Thumbnail />
+              <Thumbnail shouldObscure={shouldObscureThumbnail} className="video__embedded" src={thumbnail} />
             )}
           </React.Fragment>
           <div className="card--content">
-            <div className="card__title-identity">
-              <h1>{title}</h1>
-              {!fileInfo || fileInfo.written_bytes <= 0 ? (
-                <React.Fragment>
-                  <FilePrice uri={normalizeURI(uri)} />
-                  {isRewardContent && (
-                    <span>
-                      {' '}
-                      <Icon icon={icons.FEATURED} />
-                    </span>
-                  )}
-                </React.Fragment>
-              ) : null}
-              <div className="card__subtitle card--file-subtitle">
-                <UriIndicator uri={uri} link />
-                <span className="card__publish-date">
-                  Published on <DateTime block={height} show={DateTime.SHOW_DATE} />
-                </span>
+            <div className="card__title-identity--file">
+              <h1 className="card__title">
+              {title}
+              </h1>
+              <div className="card__title-identity-icons">
+                <FilePrice uri={normalizeURI(uri)} />
+                {isRewardContent && (
+                  <Icon icon={icons.FEATURED} />
+                )}
               </div>
             </div>
-            <div className="card__actions">
-              <SubscribeButton uri={subscriptionUri} channelName={channelName} />
-              <Link alt icon="Send" label={__('Send a tip')} />
+            <span className="card__subtitle card__subtitle--file">{__("Published on")}{" "}<DateTime block={height} show={DateTime.SHOW_DATE} /></span>
+
+            <div className="card__channel-info">
+              <UriIndicator uri={uri} link />
+              <div className="card__actions--no-margin">
+                <Link alt iconRight="Send" label={__('Enjoy this? Send a tip')} />
+                <SubscribeButton uri={subscriptionUri} channelName={channelName} />
+              </div>
             </div>
+          </div>
+
+          <div className="card--content">
             <FileDetails uri={uri} />
           </div>
         </section>

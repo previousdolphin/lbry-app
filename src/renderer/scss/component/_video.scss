@@ -1,41 +1,11 @@
-$height-video-embedded: $width-page-constrained * 9 / 16;
-
-video {
-  object-fit: contain;
-  box-sizing: border-box;
-  max-height: 100%;
-  max-width: 100%;
-  background-size: contain;
-  background-position: center center;
-  background-repeat: no-repeat;
-}
-
-.video--large {
-  display: flex;
-  text-align: center;
-  margin-bottom: 16px;
-  overflow: auto;
-  img {
-    max-width: 100%;
-  }
-
-  iframe {
-    width: 100%;
-    min-height: 500px;
-  }
-}
-
-.video {
-  background: #000;
-  color: white;
-}
-
 .video__embedded {
-  max-width: var(--width-video-embedded);
-  max-height: var(--height-video-embedded);
-  height: var(--height-video-embedded);
   position: relative;
-
+  background-color: var(--color-black);
+  min-height: var(--height-video-embedded-min);
+  position: relative;
+  display: flex;
+  align-items: center;
+  
   video {
     height: 100%;
     width: 100%;
@@ -43,34 +13,36 @@ video {
     top: 0;
     left: 0;
   }
-  &.video--hidden {
-    height: $height-video-embedded;
-  }
 }
-.video--obscured .video__cover {
-  position: relative;
-  filter: blur(var(--nsfw-blur-intensity));
+
+// Video thumbnail with play/download button
+.video__cover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-size: auto 100%;
+  background-position: center center;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:not(.card--obscured) {
+    background-color: var(--color-black);
+  }
 }
 
 .video__loading-screen {
   height: 100%;
   display: flex;
+  flex: 1;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
-.video__loading-status {
-  padding-top: 20px;
-  color: white;
-}
-
-.video__cover {
-  text-align: center;
-  height: 100%;
-  width: 100%;
-  background-size: auto 100%;
-  background-position: center center;
-  background-repeat: no-repeat;
-  position: relative;
-  background-color: var(--color-grey-dark);
+.video__loading-text {
+  color: var(--color-white);
 }

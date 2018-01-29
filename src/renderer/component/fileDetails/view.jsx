@@ -26,41 +26,37 @@ class FileDetails extends React.PureComponent {
 
     return (
       <div>
-        <hr />
         <FileActions uri={uri} />
-        <div className="divider__horizontal" />
-        <div className="card__content card__subtext card__subtext--allow-newlines">
-          <ReactMarkdown
-            source={description || ''}
-            escapeHtml
-            disallowedTypes={['Heading', 'HtmlInline', 'HtmlBlock']}
-          />
-        </div>
         <div className="card__content">
-          <table className="table-standard table-stretch">
-            <tbody>
-              <tr>
-                <td>{__('Content-Type')}</td>
-                <td>{mediaType}</td>
-              </tr>
-              <tr>
-                <td>{__('Language')}</td>
-                <td>{language}</td>
-              </tr>
-              <tr>
-                <td>{__('License')}</td>
-                <td>{license}</td>
-              </tr>
-              {downloadPath && (
-                <tr>
-                  <td>{__('Downloaded to')}</td>
-                  <td>
-                    <Link onClick={() => openFolder(downloadPath)}>{downloadPath}</Link>
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
+          <div className="card__subtext-title">
+          About
+          </div>
+          <div className="card__subtext">
+            <ReactMarkdown
+              source={description || ''}
+              escapeHtml
+              disallowedTypes={['Heading', 'HtmlInline', 'HtmlBlock']}
+            />
+          </div>
+          <div className="card__subtext-title">
+          Info
+          </div>
+          <div className="card__subtext">
+          <dl>
+            <dt>{__('Content-Type')}</dt>
+            <dd>{mediaType}</dd>
+            <dt>{__('Language')}</dt>
+            <dd>{language}</dd>
+            <dt>{__('License')}</dt>
+            <dd>{license}</dd>
+            {downloadPath && (
+              <React.Fragment>
+              <dt>{__('Downloaded to')}</dt>
+              <dd><Link fakeLink onClick={() => openFolder(downloadPath)} label={downloadPath}/></dd>
+              </React.Fragment>
+            )}
+          </dl>
+          </div>
         </div>
       </div>
     );

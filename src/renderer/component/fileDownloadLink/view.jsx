@@ -51,6 +51,7 @@ class FileDownloadLink extends React.PureComponent {
       doPause();
     };
 
+
     if (loading || downloading) {
       const progress =
           fileInfo && fileInfo.written_bytes
