@@ -11,8 +11,10 @@ import {
 } from 'redux/selectors/claims';
 import { makeSelectCostInfoForUri } from 'redux/selectors/cost_info';
 import { selectShowNsfw } from 'redux/selectors/settings';
-import FilePage from './view';
 import { makeSelectCurrentParam } from 'redux/selectors/navigation';
+import { selectPlayingUri } from 'redux/selectors/content';
+import { selectMediaPaused } from 'redux/selectors/media';
+import FilePage from './view';
 
 const select = (state, props) => ({
   claim: makeSelectClaimForUri(props.uri)(state),
@@ -22,6 +24,8 @@ const select = (state, props) => ({
   obscureNsfw: !selectShowNsfw(state),
   fileInfo: makeSelectFileInfoForUri(props.uri)(state),
   rewardedContentClaimIds: selectRewardContentClaimIds(state, props),
+  playingUri: selectPlayingUri(state),
+  isPaused: selectMediaPaused(state)
 });
 
 const perform = dispatch => ({

@@ -6,6 +6,7 @@ import Video from 'component/video';
 import Thumbnail from 'component/common/thumbnail';
 import FilePrice from 'component/filePrice';
 import FileDetails from 'component/fileDetails';
+import FileActions from 'component/fileActions';
 import UriIndicator from 'component/uriIndicator';
 import Icon from 'component/common/icon';
 import WalletSendTip from 'component/walletSendTip';
@@ -47,7 +48,9 @@ class FilePage extends React.PureComponent {
       contentType,
       uri,
       rewardedContentClaimIds,
-      obscureNsfw
+      obscureNsfw,
+      playingUri,
+      isPaused
     } = this.props;
 
     // This should be included below in the page
@@ -66,22 +69,29 @@ class FilePage extends React.PureComponent {
     const mediaType = lbry.getMediaType(contentType);
     const channelClaimId =
       value && value.publisherSignature && value.publisherSignature.certificateId;
-
     let subscriptionUri;
     if (channelName && channelClaimId) {
       subscriptionUri = buildURI({ channelName, claimId: channelClaimId }, false);
     }
 
+    const isPlaying = playingUri === uri && !isPaused;
+    console.log('isPlaying?', isPlaying);
+
     return (
       <Page>
         <section className="card">
-          <React.Fragment>
+          <div>
             {isPlayable ? (
               <Video className="video__embedded" uri={uri} />
             ) : (
               <Thumbnail shouldObscure={shouldObscureThumbnail} className="video__embedded" src={thumbnail} />
             )}
-          </React.Fragment>
+            {!isPlaying && (
+              <div className="card-media__internal-links">
+                <FileActions uri={uri} vertical />
+              </div>
+            )}
+          </div>
           <div className="card--content">
             <div className="card__title-identity--file">
               <h1 className="card__title">
