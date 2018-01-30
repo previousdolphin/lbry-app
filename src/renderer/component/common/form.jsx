@@ -2,14 +2,16 @@
 /* eslint-disable react/no-multi-comp */
 import * as React from 'react';
 import Button from 'component/link';
+import classnames from 'classnames';
 
 type FormRowProps = {
   children: React.Node,
+  padded?: boolean
 };
 
 export const FormRow = (props: FormRowProps) => {
-  const { children } = props;
-  return <div className="form-row">{children}</div>;
+  const { children, padded } = props;
+  return <div className={classnames("form-row", { "form-row--padded": padded })}>{children}</div>;
 };
 
 type FormFieldProps = {

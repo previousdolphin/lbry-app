@@ -108,7 +108,7 @@ class FilePage extends React.PureComponent {
 
             <div className="card__channel-info">
               <UriIndicator uri={uri} link />
-              <div className="card__actions--no-margin">
+              <div className="card__actions card__actions--no-margin">
                 <Link alt iconRight="Send" label={__('Enjoy this? Send a tip')} />
                 <SubscribeButton uri={subscriptionUri} channelName={channelName} />
               </div>

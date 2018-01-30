@@ -39,19 +39,16 @@ export class Modal extends React.PureComponent {
       >
         <div>{this.props.children}</div>
         {this.props.type == 'custom' ? null : ( // custom modals define their own buttons
-          <div className="modal__buttons">
+          <div className="card__actions card__actions--center">
             <Link
-              button="primary"
               label={this.props.confirmButtonLabel}
-              className="modal__button"
               disabled={this.props.confirmButtonDisabled}
               onClick={this.props.onConfirmed}
             />
             {this.props.type == 'confirm' ? (
               <Link
-                button="alt"
+                alt
                 label={this.props.abortButtonLabel}
-                className="modal__button"
                 disabled={this.props.abortButtonDisabled}
                 onClick={this.props.onAborted}
               />

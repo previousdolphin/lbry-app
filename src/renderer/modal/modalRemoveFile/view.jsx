@@ -1,13 +1,13 @@
 import React from 'react';
 import { Modal } from 'modal/modal';
-import FormField from 'component/formField/index';
+import { FormRow, FormField } from 'component/common/form';
 
 class ModalRemoveFile extends React.PureComponent {
   constructor(props) {
     super(props);
 
     this.state = {
-      deleteChecked: false,
+      deleteChecked: true,
       abandonClaimChecked: false,
     };
   }
@@ -41,23 +41,31 @@ class ModalRemoveFile extends React.PureComponent {
           {__("Are you sure you'd like to remove")} <cite>{title}</cite> {__('from LBRY?')}
         </p>
 
-        <section>
+        <FormRow padded>
           <FormField
-            type="checkbox"
-            checked={deleteChecked}
-            onClick={this.handleDeleteCheckboxClicked.bind(this)}
-            label={__('Delete this file from my computer')}
+            prefix={__('Also delete this file from my computer')}
+            render={() => (
+              <input
+                type="checkbox"
+                checked={deleteChecked}
+                onChange={this.handleDeleteCheckboxClicked.bind(this)}
+              />
+            )}
           />
-        </section>
+        </FormRow>
         {claimIsMine && (
-          <section>
+          <FormRow>
             <FormField
-              type="checkbox"
-              checked={abandonClaimChecked}
-              onClick={this.handleAbandonClaimCheckboxClicked.bind(this)}
-              label={__('Abandon the claim for this URI')}
+              prefix={__('Abandon the claim for this URI')}
+              render={() => (
+                <input
+                  type="checkbox"
+                  checked={abandonClaimChecked}
+                  onChange={this.handleAbandonClaimCheckboxClicked.bind(this)}
+                />
+              )}
             />
-          </section>
+        </FormRow>
         )}
       </Modal>
     );

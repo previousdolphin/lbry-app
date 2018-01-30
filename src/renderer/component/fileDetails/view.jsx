@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import lbry from 'lbry.js';
-import FileActions from 'component/fileActions';
 import Link from 'component/link';
 import DateTime from 'component/dateTime';
 
@@ -26,7 +25,6 @@ class FileDetails extends React.PureComponent {
 
     return (
       <div>
-        <FileActions uri={uri} />
         <div className="card__content">
           <div className="card__subtext-title">
           About

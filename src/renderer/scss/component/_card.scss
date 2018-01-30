@@ -89,21 +89,25 @@
 
 .card-media__internal-links {
   position: absolute;
-  top: 5px;
-  right: 5px;
+  top: $spacing-vertical * 2/3;
+  right: $spacing-vertical * 2/3;
 }
 
+// Channel info with buttons on the right side
 .card__channel-info {
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  .card__actions .btn:not(:first-of-type) {
+    margin-left: $spacing-vertical / 3;
+  }
 }
 
 .card__content {
   margin-top: var(--card-margin);
   margin-bottom: var(--card-margin);
 }
-
 
 .card__subtext-title {
   color: var(--color-black);
@@ -125,18 +129,25 @@
   display: flex;
 }
 
+.card__actions--no-margin {
+  magin-top: 0;
+}
+
 .card__actions--vertical {
-  display: flex;
   flex-direction: column;
   margin-top: 0;
 
-  .btn {
+  .btn:not(:first-child) {
     margin-top: $spacing-vertical * 2/3;
   }
 }
 
-.card__actions--no-margin {
-  display: flex;
+.card__actions--center {
+  align-items: center;
+
+  .btn {
+    margin: 0 $spacing-vertical / 3;
+  }
 }
 
 /*
